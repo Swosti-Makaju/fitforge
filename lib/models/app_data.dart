@@ -149,9 +149,21 @@ class AppData {
   ];
 
   static List<Map<String, dynamic>> achievements = [
-    {'icon': '🔥', 'title': '7-Day Streak', 'desc': 'Worked out 7 days in a row'},
-    {'icon': '💯', 'title': '100 Workouts', 'desc': 'Completed 100 total workouts'},
-    {'icon': '⚡', 'title': 'Speed Demon', 'desc': 'Finished workout in under 30min'},
+    {
+      'icon': '🔥',
+      'title': '7-Day Streak',
+      'desc': 'Worked out 7 days in a row'
+    },
+    {
+      'icon': '💯',
+      'title': '100 Workouts',
+      'desc': 'Completed 100 total workouts'
+    },
+    {
+      'icon': '⚡',
+      'title': 'Speed Demon',
+      'desc': 'Finished workout in under 30min'
+    },
     {'icon': '🏆', 'title': 'PR Breaker', 'desc': 'Set 5 personal records'},
   ];
 }

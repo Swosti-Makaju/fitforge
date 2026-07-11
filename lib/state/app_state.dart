@@ -52,15 +52,15 @@ class Exercise {
   });
 
   Exercise copyWith({bool? isCompleted, int? completedSets}) => Exercise(
-    name: name,
-    muscleGroup: muscleGroup,
-    sets: sets,
-    reps: reps,
-    rest: rest,
-    icon: icon,
-    isCompleted: isCompleted ?? this.isCompleted,
-    completedSets: completedSets ?? this.completedSets,
-  );
+        name: name,
+        muscleGroup: muscleGroup,
+        sets: sets,
+        reps: reps,
+        rest: rest,
+        icon: icon,
+        isCompleted: isCompleted ?? this.isCompleted,
+        completedSets: completedSets ?? this.completedSets,
+      );
 }
 
 // ─── Workout Plan Model ───────────────────────────────────────
@@ -104,7 +104,8 @@ class WorkoutRecord {
     required this.totalExercises,
   });
 
-  double get completionRate => totalExercises > 0 ? exercisesCompleted / totalExercises : 0;
+  double get completionRate =>
+      totalExercises > 0 ? exercisesCompleted / totalExercises : 0;
 }
 
 // ─── Daily Log ────────────────────────────────────────────────
@@ -127,7 +128,9 @@ class DailyLog {
 // ─── App State (ChangeNotifier) ───────────────────────────────
 class AppState extends ChangeNotifier {
   // Theme — initialized from the device's current brightness
-  bool _isDarkMode = WidgetsBinding.instance.platformDispatcher.platformBrightness == Brightness.dark;
+  bool _isDarkMode =
+      WidgetsBinding.instance.platformDispatcher.platformBrightness ==
+          Brightness.dark;
   bool get isDarkMode => _isDarkMode;
   void toggleTheme() {
     _isDarkMode = !_isDarkMode;
@@ -180,20 +183,57 @@ class AppState extends ChangeNotifier {
 
   // Weekly logs
   final List<DailyLog> _weeklyLogs = [
-    DailyLog(date: DateTime.now().subtract(const Duration(days: 6)), caloriesBurned: 420, steps: 7200, activeMinutes: 38, workoutDone: true),
-    DailyLog(date: DateTime.now().subtract(const Duration(days: 5)), caloriesBurned: 510, steps: 9100, activeMinutes: 52, workoutDone: true),
-    DailyLog(date: DateTime.now().subtract(const Duration(days: 4)), caloriesBurned: 290, steps: 5400, activeMinutes: 25, workoutDone: false),
-    DailyLog(date: DateTime.now().subtract(const Duration(days: 3)), caloriesBurned: 620, steps: 11200, activeMinutes: 65, workoutDone: true),
-    DailyLog(date: DateTime.now().subtract(const Duration(days: 2)), caloriesBurned: 480, steps: 8800, activeMinutes: 45, workoutDone: true),
-    DailyLog(date: DateTime.now().subtract(const Duration(days: 1)), caloriesBurned: 380, steps: 7600, activeMinutes: 40, workoutDone: true),
-    DailyLog(date: DateTime.now(), caloriesBurned: 1842, steps: 8421, activeMinutes: 52, workoutDone: false),
+    DailyLog(
+        date: DateTime.now().subtract(const Duration(days: 6)),
+        caloriesBurned: 420,
+        steps: 7200,
+        activeMinutes: 38,
+        workoutDone: true),
+    DailyLog(
+        date: DateTime.now().subtract(const Duration(days: 5)),
+        caloriesBurned: 510,
+        steps: 9100,
+        activeMinutes: 52,
+        workoutDone: true),
+    DailyLog(
+        date: DateTime.now().subtract(const Duration(days: 4)),
+        caloriesBurned: 290,
+        steps: 5400,
+        activeMinutes: 25,
+        workoutDone: false),
+    DailyLog(
+        date: DateTime.now().subtract(const Duration(days: 3)),
+        caloriesBurned: 620,
+        steps: 11200,
+        activeMinutes: 65,
+        workoutDone: true),
+    DailyLog(
+        date: DateTime.now().subtract(const Duration(days: 2)),
+        caloriesBurned: 480,
+        steps: 8800,
+        activeMinutes: 45,
+        workoutDone: true),
+    DailyLog(
+        date: DateTime.now().subtract(const Duration(days: 1)),
+        caloriesBurned: 380,
+        steps: 7600,
+        activeMinutes: 40,
+        workoutDone: true),
+    DailyLog(
+        date: DateTime.now(),
+        caloriesBurned: 1842,
+        steps: 8421,
+        activeMinutes: 52,
+        workoutDone: false),
   ];
 
   List<DailyLog> get weeklyLogs => _weeklyLogs;
 
   int get weeklyWorkoutCount => _weeklyLogs.where((l) => l.workoutDone).length;
-  int get weeklyCaloriesTotal => _weeklyLogs.fold(0, (sum, l) => sum + l.caloriesBurned);
-  int get weeklyActiveMinutes => _weeklyLogs.fold(0, (sum, l) => sum + l.activeMinutes);
+  int get weeklyCaloriesTotal =>
+      _weeklyLogs.fold(0, (sum, l) => sum + l.caloriesBurned);
+  int get weeklyActiveMinutes =>
+      _weeklyLogs.fold(0, (sum, l) => sum + l.activeMinutes);
 
   // Body metrics (dynamic)
   double _weight = 78.5;
@@ -205,7 +245,15 @@ class AppState extends ChangeNotifier {
   double get muscle => _muscle;
 
   // Weight history for chart
-  final List<double> _weightHistory = [80.2, 79.8, 79.5, 79.1, 78.9, 78.7, 78.5];
+  final List<double> _weightHistory = [
+    80.2,
+    79.8,
+    79.5,
+    79.1,
+    78.9,
+    78.7,
+    78.5
+  ];
   List<double> get weightHistory => _weightHistory;
 
   // Notifications (for badge count)
@@ -228,11 +276,41 @@ class AppState extends ChangeNotifier {
       duration: '45 min',
       difficulty: 'Intermediate',
       exercises: [
-        Exercise(name: 'Bench Press', muscleGroup: 'Chest', sets: 4, reps: '8-10', rest: '90s', icon: Icons.fitness_center),
-        Exercise(name: 'Incline DB Press', muscleGroup: 'Upper Chest', sets: 3, reps: '10-12', rest: '60s', icon: Icons.fitness_center),
-        Exercise(name: 'Cable Fly', muscleGroup: 'Chest', sets: 3, reps: '12-15', rest: '45s', icon: Icons.cable),
-        Exercise(name: 'Tricep Dips', muscleGroup: 'Triceps', sets: 3, reps: '10-12', rest: '60s', icon: Icons.accessibility_new),
-        Exercise(name: 'Skull Crushers', muscleGroup: 'Triceps', sets: 3, reps: '10-12', rest: '60s', icon: Icons.fitness_center),
+        Exercise(
+            name: 'Bench Press',
+            muscleGroup: 'Chest',
+            sets: 4,
+            reps: '8-10',
+            rest: '90s',
+            icon: Icons.fitness_center),
+        Exercise(
+            name: 'Incline DB Press',
+            muscleGroup: 'Upper Chest',
+            sets: 3,
+            reps: '10-12',
+            rest: '60s',
+            icon: Icons.fitness_center),
+        Exercise(
+            name: 'Cable Fly',
+            muscleGroup: 'Chest',
+            sets: 3,
+            reps: '12-15',
+            rest: '45s',
+            icon: Icons.cable),
+        Exercise(
+            name: 'Tricep Dips',
+            muscleGroup: 'Triceps',
+            sets: 3,
+            reps: '10-12',
+            rest: '60s',
+            icon: Icons.accessibility_new),
+        Exercise(
+            name: 'Skull Crushers',
+            muscleGroup: 'Triceps',
+            sets: 3,
+            reps: '10-12',
+            rest: '60s',
+            icon: Icons.fitness_center),
       ],
     ),
     WorkoutPlan(
@@ -242,11 +320,41 @@ class AppState extends ChangeNotifier {
       duration: '50 min',
       difficulty: 'Advanced',
       exercises: [
-        Exercise(name: 'Deadlift', muscleGroup: 'Back', sets: 4, reps: '5-6', rest: '2min', icon: Icons.fitness_center),
-        Exercise(name: 'Pull-Ups', muscleGroup: 'Lats', sets: 4, reps: '8-10', rest: '90s', icon: Icons.accessibility_new),
-        Exercise(name: 'Barbell Row', muscleGroup: 'Mid Back', sets: 3, reps: '8-10', rest: '90s', icon: Icons.fitness_center),
-        Exercise(name: 'Bicep Curls', muscleGroup: 'Biceps', sets: 3, reps: '10-12', rest: '60s', icon: Icons.fitness_center),
-        Exercise(name: 'Hammer Curls', muscleGroup: 'Biceps', sets: 3, reps: '12-15', rest: '45s', icon: Icons.fitness_center),
+        Exercise(
+            name: 'Deadlift',
+            muscleGroup: 'Back',
+            sets: 4,
+            reps: '5-6',
+            rest: '2min',
+            icon: Icons.fitness_center),
+        Exercise(
+            name: 'Pull-Ups',
+            muscleGroup: 'Lats',
+            sets: 4,
+            reps: '8-10',
+            rest: '90s',
+            icon: Icons.accessibility_new),
+        Exercise(
+            name: 'Barbell Row',
+            muscleGroup: 'Mid Back',
+            sets: 3,
+            reps: '8-10',
+            rest: '90s',
+            icon: Icons.fitness_center),
+        Exercise(
+            name: 'Bicep Curls',
+            muscleGroup: 'Biceps',
+            sets: 3,
+            reps: '10-12',
+            rest: '60s',
+            icon: Icons.fitness_center),
+        Exercise(
+            name: 'Hammer Curls',
+            muscleGroup: 'Biceps',
+            sets: 3,
+            reps: '12-15',
+            rest: '45s',
+            icon: Icons.fitness_center),
       ],
     ),
     WorkoutPlan(
@@ -256,11 +364,41 @@ class AppState extends ChangeNotifier {
       duration: '20 min',
       difficulty: 'Intense',
       exercises: [
-        Exercise(name: 'Burpees', muscleGroup: 'Full Body', sets: 4, reps: '15', rest: '30s', icon: Icons.directions_run),
-        Exercise(name: 'Jump Squats', muscleGroup: 'Legs', sets: 4, reps: '20', rest: '30s', icon: Icons.directions_run),
-        Exercise(name: 'Mountain Climbers', muscleGroup: 'Core', sets: 4, reps: '30s', rest: '20s', icon: Icons.directions_run),
-        Exercise(name: 'High Knees', muscleGroup: 'Cardio', sets: 4, reps: '30s', rest: '20s', icon: Icons.directions_run),
-        Exercise(name: 'Box Jumps', muscleGroup: 'Legs', sets: 3, reps: '12', rest: '45s', icon: Icons.directions_run),
+        Exercise(
+            name: 'Burpees',
+            muscleGroup: 'Full Body',
+            sets: 4,
+            reps: '15',
+            rest: '30s',
+            icon: Icons.directions_run),
+        Exercise(
+            name: 'Jump Squats',
+            muscleGroup: 'Legs',
+            sets: 4,
+            reps: '20',
+            rest: '30s',
+            icon: Icons.directions_run),
+        Exercise(
+            name: 'Mountain Climbers',
+            muscleGroup: 'Core',
+            sets: 4,
+            reps: '30s',
+            rest: '20s',
+            icon: Icons.directions_run),
+        Exercise(
+            name: 'High Knees',
+            muscleGroup: 'Cardio',
+            sets: 4,
+            reps: '30s',
+            rest: '20s',
+            icon: Icons.directions_run),
+        Exercise(
+            name: 'Box Jumps',
+            muscleGroup: 'Legs',
+            sets: 3,
+            reps: '12',
+            rest: '45s',
+            icon: Icons.directions_run),
       ],
     ),
     WorkoutPlan(
@@ -270,11 +408,41 @@ class AppState extends ChangeNotifier {
       duration: '55 min',
       difficulty: 'Advanced',
       exercises: [
-        Exercise(name: 'Barbell Squat', muscleGroup: 'Quads', sets: 4, reps: '6-8', rest: '2min', icon: Icons.fitness_center),
-        Exercise(name: 'Romanian DL', muscleGroup: 'Hamstrings', sets: 3, reps: '10-12', rest: '90s', icon: Icons.fitness_center),
-        Exercise(name: 'Leg Press', muscleGroup: 'Quads', sets: 3, reps: '12-15', rest: '60s', icon: Icons.fitness_center),
-        Exercise(name: 'Lunges', muscleGroup: 'Glutes', sets: 3, reps: '12 each', rest: '60s', icon: Icons.accessibility_new),
-        Exercise(name: 'Calf Raises', muscleGroup: 'Calves', sets: 4, reps: '20', rest: '45s', icon: Icons.fitness_center),
+        Exercise(
+            name: 'Barbell Squat',
+            muscleGroup: 'Quads',
+            sets: 4,
+            reps: '6-8',
+            rest: '2min',
+            icon: Icons.fitness_center),
+        Exercise(
+            name: 'Romanian DL',
+            muscleGroup: 'Hamstrings',
+            sets: 3,
+            reps: '10-12',
+            rest: '90s',
+            icon: Icons.fitness_center),
+        Exercise(
+            name: 'Leg Press',
+            muscleGroup: 'Quads',
+            sets: 3,
+            reps: '12-15',
+            rest: '60s',
+            icon: Icons.fitness_center),
+        Exercise(
+            name: 'Lunges',
+            muscleGroup: 'Glutes',
+            sets: 3,
+            reps: '12 each',
+            rest: '60s',
+            icon: Icons.accessibility_new),
+        Exercise(
+            name: 'Calf Raises',
+            muscleGroup: 'Calves',
+            sets: 4,
+            reps: '20',
+            rest: '45s',
+            icon: Icons.fitness_center),
       ],
     ),
     WorkoutPlan(
@@ -284,11 +452,41 @@ class AppState extends ChangeNotifier {
       duration: '25 min',
       difficulty: 'Intermediate',
       exercises: [
-        Exercise(name: 'Plank', muscleGroup: 'Core', sets: 3, reps: '60s', rest: '30s', icon: Icons.accessibility_new),
-        Exercise(name: 'Crunches', muscleGroup: 'Abs', sets: 3, reps: '20', rest: '30s', icon: Icons.accessibility_new),
-        Exercise(name: 'Russian Twists', muscleGroup: 'Obliques', sets: 3, reps: '20', rest: '30s', icon: Icons.accessibility_new),
-        Exercise(name: 'Leg Raises', muscleGroup: 'Lower Abs', sets: 3, reps: '15', rest: '30s', icon: Icons.accessibility_new),
-        Exercise(name: 'Bicycle Crunches', muscleGroup: 'Abs', sets: 3, reps: '20', rest: '30s', icon: Icons.accessibility_new),
+        Exercise(
+            name: 'Plank',
+            muscleGroup: 'Core',
+            sets: 3,
+            reps: '60s',
+            rest: '30s',
+            icon: Icons.accessibility_new),
+        Exercise(
+            name: 'Crunches',
+            muscleGroup: 'Abs',
+            sets: 3,
+            reps: '20',
+            rest: '30s',
+            icon: Icons.accessibility_new),
+        Exercise(
+            name: 'Russian Twists',
+            muscleGroup: 'Obliques',
+            sets: 3,
+            reps: '20',
+            rest: '30s',
+            icon: Icons.accessibility_new),
+        Exercise(
+            name: 'Leg Raises',
+            muscleGroup: 'Lower Abs',
+            sets: 3,
+            reps: '15',
+            rest: '30s',
+            icon: Icons.accessibility_new),
+        Exercise(
+            name: 'Bicycle Crunches',
+            muscleGroup: 'Abs',
+            sets: 3,
+            reps: '20',
+            rest: '30s',
+            icon: Icons.accessibility_new),
       ],
     ),
     WorkoutPlan(
@@ -298,11 +496,41 @@ class AppState extends ChangeNotifier {
       duration: '30 min',
       difficulty: 'Beginner',
       exercises: [
-        Exercise(name: 'Sun Salutation', muscleGroup: 'Full Body', sets: 3, reps: '5 cycles', rest: '30s', icon: Icons.self_improvement),
-        Exercise(name: 'Warrior I', muscleGroup: 'Balance', sets: 2, reps: '60s each', rest: '20s', icon: Icons.self_improvement),
-        Exercise(name: 'Downward Dog', muscleGroup: 'Stretch', sets: 3, reps: '45s', rest: '15s', icon: Icons.self_improvement),
-        Exercise(name: 'Child\'s Pose', muscleGroup: 'Recovery', sets: 2, reps: '60s', rest: '10s', icon: Icons.self_improvement),
-        Exercise(name: 'Savasana', muscleGroup: 'Recovery', sets: 1, reps: '5 min', rest: 'N/A', icon: Icons.self_improvement),
+        Exercise(
+            name: 'Sun Salutation',
+            muscleGroup: 'Full Body',
+            sets: 3,
+            reps: '5 cycles',
+            rest: '30s',
+            icon: Icons.self_improvement),
+        Exercise(
+            name: 'Warrior I',
+            muscleGroup: 'Balance',
+            sets: 2,
+            reps: '60s each',
+            rest: '20s',
+            icon: Icons.self_improvement),
+        Exercise(
+            name: 'Downward Dog',
+            muscleGroup: 'Stretch',
+            sets: 3,
+            reps: '45s',
+            rest: '15s',
+            icon: Icons.self_improvement),
+        Exercise(
+            name: 'Child\'s Pose',
+            muscleGroup: 'Recovery',
+            sets: 2,
+            reps: '60s',
+            rest: '10s',
+            icon: Icons.self_improvement),
+        Exercise(
+            name: 'Savasana',
+            muscleGroup: 'Recovery',
+            sets: 1,
+            reps: '5 min',
+            rest: 'N/A',
+            icon: Icons.self_improvement),
       ],
     ),
   ];
@@ -355,7 +583,13 @@ class AppState extends ChangeNotifier {
     notifyListeners();
   }
 
-  void updateProfile({String? name, double? weight, double? height, int? age, String? goal, int? weeklyGoal}) {
+  void updateProfile(
+      {String? name,
+      double? weight,
+      double? height,
+      int? age,
+      String? goal,
+      int? weeklyGoal}) {
     if (_currentUser == null) return;
     if (name != null) _currentUser!.name = name;
     if (weight != null) {
@@ -385,10 +619,16 @@ class AppState extends ChangeNotifier {
 
   void startWorkout(WorkoutPlan plan) {
     _activeWorkoutPlan = plan;
-    _activeExercises = plan.exercises.map((e) => Exercise(
-      name: e.name, muscleGroup: e.muscleGroup, sets: e.sets,
-      reps: e.reps, rest: e.rest, icon: e.icon,
-    )).toList();
+    _activeExercises = plan.exercises
+        .map((e) => Exercise(
+              name: e.name,
+              muscleGroup: e.muscleGroup,
+              sets: e.sets,
+              reps: e.reps,
+              rest: e.rest,
+              icon: e.icon,
+            ))
+        .toList();
     _workoutActive = true;
     _elapsedSeconds = 0;
     notifyListeners();
@@ -401,21 +641,24 @@ class AppState extends ChangeNotifier {
       final mins = _elapsedSeconds ~/ 60;
 
       // Save record
-      _workoutHistory.insert(0, WorkoutRecord(
-        date: DateTime.now(),
-        planName: _activeWorkoutPlan!.name,
-        planEmoji: _activeWorkoutPlan!.emoji,
-        durationSeconds: _elapsedSeconds,
-        caloriesBurned: cal,
-        exercisesCompleted: done,
-        totalExercises: _activeExercises.length,
-      ));
+      _workoutHistory.insert(
+          0,
+          WorkoutRecord(
+            date: DateTime.now(),
+            planName: _activeWorkoutPlan!.name,
+            planEmoji: _activeWorkoutPlan!.emoji,
+            durationSeconds: _elapsedSeconds,
+            caloriesBurned: cal,
+            exercisesCompleted: done,
+            totalExercises: _activeExercises.length,
+          ));
 
       if (done > 0) {
         _currentUser?.totalWorkouts++;
         _currentUser?.currentStreak++;
         // Update best streak
-        if ((_currentUser?.currentStreak ?? 0) > (_currentUser?.bestStreak ?? 0)) {
+        if ((_currentUser?.currentStreak ?? 0) >
+            (_currentUser?.bestStreak ?? 0)) {
           _currentUser?.bestStreak = _currentUser!.currentStreak;
         }
         _todayCalories += cal;
@@ -446,7 +689,8 @@ class AppState extends ChangeNotifier {
 
   void toggleExercise(int index) {
     if (index >= 0 && index < _activeExercises.length) {
-      _activeExercises[index].isCompleted = !_activeExercises[index].isCompleted;
+      _activeExercises[index].isCompleted =
+          !_activeExercises[index].isCompleted;
       notifyListeners();
     }
   }
@@ -469,7 +713,10 @@ class AppState extends ChangeNotifier {
   }
 
   void updateBodyMetrics({double? weight, double? bodyFat, double? muscle}) {
-    if (weight != null) { _weight = weight; _currentUser?.weight = weight; }
+    if (weight != null) {
+      _weight = weight;
+      _currentUser?.weight = weight;
+    }
     if (bodyFat != null) _bodyFat = bodyFat;
     if (muscle != null) _muscle = muscle;
     notifyListeners();

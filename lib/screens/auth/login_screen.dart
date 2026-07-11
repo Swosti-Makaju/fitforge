@@ -9,7 +9,8 @@ class LoginScreen extends StatefulWidget {
   State<LoginScreen> createState() => _LoginScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> with TickerProviderStateMixin {
+class _LoginScreenState extends State<LoginScreen>
+    with TickerProviderStateMixin {
   final _formKey = GlobalKey<FormState>();
   final _emailCtrl = TextEditingController();
   final _passCtrl = TextEditingController();
@@ -25,11 +26,16 @@ class _LoginScreenState extends State<LoginScreen> with TickerProviderStateMixin
   @override
   void initState() {
     super.initState();
-    _fadeCtrl = AnimationController(vsync: this, duration: const Duration(milliseconds: 700))..forward();
-    _slideCtrl = AnimationController(vsync: this, duration: const Duration(milliseconds: 600))..forward();
+    _fadeCtrl = AnimationController(
+        vsync: this, duration: const Duration(milliseconds: 700))
+      ..forward();
+    _slideCtrl = AnimationController(
+        vsync: this, duration: const Duration(milliseconds: 600))
+      ..forward();
     _fadeAnim = CurvedAnimation(parent: _fadeCtrl, curve: Curves.easeOut);
     _slideAnim = Tween<Offset>(begin: const Offset(0, 0.06), end: Offset.zero)
-        .animate(CurvedAnimation(parent: _slideCtrl, curve: Curves.easeOutCubic));
+        .animate(
+            CurvedAnimation(parent: _slideCtrl, curve: Curves.easeOutCubic));
   }
 
   @override
@@ -43,12 +49,19 @@ class _LoginScreenState extends State<LoginScreen> with TickerProviderStateMixin
 
   Future<void> _login() async {
     if (!_formKey.currentState!.validate()) return;
-    setState(() { _loading = true; _errorMsg = null; });
+    setState(() {
+      _loading = true;
+      _errorMsg = null;
+    });
     await Future.delayed(const Duration(milliseconds: 1200));
     final state = AppStateProvider.of(context);
     final ok = state.login(_emailCtrl.text.trim(), _passCtrl.text);
     if (!ok) {
-      setState(() { _errorMsg = 'No account found. Please register first, or check your email and password.'; _loading = false; });
+      setState(() {
+        _errorMsg =
+            'No account found. Please register first, or check your email and password.';
+        _loading = false;
+      });
     }
   }
 
@@ -98,17 +111,23 @@ class _LoginScreenState extends State<LoginScreen> with TickerProviderStateMixin
     return Row(
       children: [
         Container(
-          width: 44, height: 44,
+          width: 44,
+          height: 44,
           decoration: BoxDecoration(
-            gradient: const LinearGradient(colors: [AppTheme.accentNeon, Color(0xFF00D9F5)]),
+            gradient: const LinearGradient(
+                colors: [AppTheme.accentNeon, Color(0xFF00D9F5)]),
             borderRadius: BorderRadius.circular(12),
           ),
           child: const Icon(Icons.bolt, color: Colors.black, size: 26),
         ),
         const SizedBox(width: 12),
-        Text('FitForge', style: TextStyle(
-          fontFamily: 'Poppins', fontSize: 22, fontWeight: FontWeight.w800, color: th.textPrimary,
-        )),
+        Text('FitForge',
+            style: TextStyle(
+              fontFamily: 'Poppins',
+              fontSize: 22,
+              fontWeight: FontWeight.w800,
+              color: th.textPrimary,
+            )),
       ],
     );
   }
@@ -117,11 +136,18 @@ class _LoginScreenState extends State<LoginScreen> with TickerProviderStateMixin
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text('Welcome back 👋', style: Theme.of(context).textTheme.displayMedium?.copyWith(fontSize: 28, color: th.textPrimary)),
+        Text('Welcome back 👋',
+            style: Theme.of(context)
+                .textTheme
+                .displayMedium
+                ?.copyWith(fontSize: 28, color: th.textPrimary)),
         const SizedBox(height: 6),
-        Text('Sign in to continue your fitness journey.', style: TextStyle(
-          fontFamily: 'Poppins', fontSize: 15, color: th.textMuted,
-        )),
+        Text('Sign in to continue your fitness journey.',
+            style: TextStyle(
+              fontFamily: 'Poppins',
+              fontSize: 15,
+              color: th.textMuted,
+            )),
       ],
     );
   }
@@ -134,14 +160,17 @@ class _LoginScreenState extends State<LoginScreen> with TickerProviderStateMixin
           TextFormField(
             controller: _emailCtrl,
             keyboardType: TextInputType.emailAddress,
-            style: TextStyle(fontFamily: 'Poppins', color: th.textPrimary, fontSize: 15),
+            style: TextStyle(
+                fontFamily: 'Poppins', color: th.textPrimary, fontSize: 15),
             decoration: InputDecoration(
               hintText: 'Email address',
-              prefixIcon: Icon(Icons.email_outlined, color: th.textMuted, size: 20),
+              prefixIcon:
+                  Icon(Icons.email_outlined, color: th.textMuted, size: 20),
             ),
             validator: (v) {
               if (v == null || v.isEmpty) return 'Please enter your email';
-              if (!RegExp(r'^[\w-.]+@([\w-]+\.)+[\w]{2,4}').hasMatch(v)) return 'Enter a valid email';
+              if (!RegExp(r'^[\w-.]+@([\w-]+\.)+[\w]{2,4}').hasMatch(v))
+                return 'Enter a valid email';
               return null;
             },
           ),
@@ -149,13 +178,20 @@ class _LoginScreenState extends State<LoginScreen> with TickerProviderStateMixin
           TextFormField(
             controller: _passCtrl,
             obscureText: _obscure,
-            style: TextStyle(fontFamily: 'Poppins', color: th.textPrimary, fontSize: 15),
+            style: TextStyle(
+                fontFamily: 'Poppins', color: th.textPrimary, fontSize: 15),
             decoration: InputDecoration(
               hintText: 'Password',
-              prefixIcon: Icon(Icons.lock_outline, color: th.textMuted, size: 20),
+              prefixIcon:
+                  Icon(Icons.lock_outline, color: th.textMuted, size: 20),
               suffixIcon: GestureDetector(
                 onTap: () => setState(() => _obscure = !_obscure),
-                child: Icon(_obscure ? Icons.visibility_outlined : Icons.visibility_off_outlined, color: th.textMuted, size: 20),
+                child: Icon(
+                    _obscure
+                        ? Icons.visibility_outlined
+                        : Icons.visibility_off_outlined,
+                    color: th.textMuted,
+                    size: 20),
               ),
             ),
             validator: (v) {
@@ -174,22 +210,33 @@ class _LoginScreenState extends State<LoginScreen> with TickerProviderStateMixin
       alignment: Alignment.centerRight,
       child: GestureDetector(
         onTap: () => ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Password reset email sent!'), backgroundColor: AppTheme.accentNeon),
+          const SnackBar(
+              content: Text('Password reset email sent!'),
+              backgroundColor: AppTheme.accentNeon),
         ),
-        child: const Text('Forgot password?', style: TextStyle(
-          fontFamily: 'Poppins', fontSize: 13, color: AppTheme.accentNeon, fontWeight: FontWeight.w500,
-        )),
+        child: const Text('Forgot password?',
+            style: TextStyle(
+              fontFamily: 'Poppins',
+              fontSize: 13,
+              color: AppTheme.accentNeon,
+              fontWeight: FontWeight.w500,
+            )),
       ),
     );
   }
 
   Widget _buildLoginButton() {
     return SizedBox(
-      width: double.infinity, height: 56,
+      width: double.infinity,
+      height: 56,
       child: ElevatedButton(
         onPressed: _loading ? null : _login,
         child: _loading
-            ? const SizedBox(width: 22, height: 22, child: CircularProgressIndicator(strokeWidth: 2.5, color: Colors.black))
+            ? const SizedBox(
+                width: 22,
+                height: 22,
+                child: CircularProgressIndicator(
+                    strokeWidth: 2.5, color: Colors.black))
             : const Text('Sign In'),
       ),
     );
@@ -209,7 +256,12 @@ class _LoginScreenState extends State<LoginScreen> with TickerProviderStateMixin
           children: [
             const Icon(Icons.error_outline, color: AppTheme.errorRed, size: 18),
             const SizedBox(width: 10),
-            Expanded(child: Text(_errorMsg!, style: const TextStyle(fontFamily: 'Poppins', fontSize: 13, color: AppTheme.errorRed))),
+            Expanded(
+                child: Text(_errorMsg!,
+                    style: const TextStyle(
+                        fontFamily: 'Poppins',
+                        fontSize: 13,
+                        color: AppTheme.errorRed))),
           ],
         ),
       ),
@@ -221,7 +273,9 @@ class _LoginScreenState extends State<LoginScreen> with TickerProviderStateMixin
       Expanded(child: Divider(color: th.divider, thickness: 1)),
       Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16),
-        child: Text('or continue with', style: TextStyle(fontFamily: 'Poppins', fontSize: 13, color: th.textMuted)),
+        child: Text('or continue with',
+            style: TextStyle(
+                fontFamily: 'Poppins', fontSize: 13, color: th.textMuted)),
       ),
       Expanded(child: Divider(color: th.divider, thickness: 1)),
     ]);
@@ -229,28 +283,45 @@ class _LoginScreenState extends State<LoginScreen> with TickerProviderStateMixin
 
   Widget _buildSocialButtons(AppThemeData th) {
     return Row(children: [
-      Expanded(child: _SocialBtn(th: th, label: 'Google', icon: Icons.g_mobiledata_rounded, onTap: () => _mockSocialLogin('Google'))),
+      Expanded(
+          child: _SocialBtn(
+              th: th,
+              label: 'Google',
+              icon: Icons.g_mobiledata_rounded,
+              onTap: () => _mockSocialLogin('Google'))),
       const SizedBox(width: 16),
-      Expanded(child: _SocialBtn(th: th, label: 'Apple', icon: Icons.apple, onTap: () => _mockSocialLogin('Apple'))),
+      Expanded(
+          child: _SocialBtn(
+              th: th,
+              label: 'Apple',
+              icon: Icons.apple,
+              onTap: () => _mockSocialLogin('Apple'))),
     ]);
   }
 
   void _mockSocialLogin(String provider) {
     ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text('$provider login coming soon!'), backgroundColor: AppTheme.of(context).bgCard),
+      SnackBar(
+          content: Text('$provider login coming soon!'),
+          backgroundColor: AppTheme.of(context).bgCard),
     );
   }
 
   Widget _buildRegisterLink(AppThemeData th) {
     return Center(
       child: GestureDetector(
-        onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const RegisterScreen())),
+        onTap: () => Navigator.push(
+            context, MaterialPageRoute(builder: (_) => const RegisterScreen())),
         child: RichText(
           text: TextSpan(
             text: "Don't have an account? ",
-            style: TextStyle(fontFamily: 'Poppins', fontSize: 14, color: th.textMuted),
+            style: TextStyle(
+                fontFamily: 'Poppins', fontSize: 14, color: th.textMuted),
             children: const [
-              TextSpan(text: 'Sign Up', style: TextStyle(color: AppTheme.accentNeon, fontWeight: FontWeight.w600)),
+              TextSpan(
+                  text: 'Sign Up',
+                  style: TextStyle(
+                      color: AppTheme.accentNeon, fontWeight: FontWeight.w600)),
             ],
           ),
         ),
@@ -264,7 +335,11 @@ class _SocialBtn extends StatelessWidget {
   final IconData icon;
   final VoidCallback onTap;
   final AppThemeData th;
-  const _SocialBtn({required this.label, required this.icon, required this.onTap, required this.th});
+  const _SocialBtn(
+      {required this.label,
+      required this.icon,
+      required this.onTap,
+      required this.th});
 
   @override
   Widget build(BuildContext context) {
@@ -282,7 +357,12 @@ class _SocialBtn extends StatelessWidget {
           children: [
             Icon(icon, color: th.textSecondary, size: 22),
             const SizedBox(width: 8),
-            Text(label, style: TextStyle(fontFamily: 'Poppins', fontWeight: FontWeight.w500, fontSize: 14, color: th.textSecondary)),
+            Text(label,
+                style: TextStyle(
+                    fontFamily: 'Poppins',
+                    fontWeight: FontWeight.w500,
+                    fontSize: 14,
+                    color: th.textSecondary)),
           ],
         ),
       ),
